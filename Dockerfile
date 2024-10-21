@@ -27,13 +27,16 @@ RUN Expand-Archive -Path $env:Home\krp.zip -DestinationPath $env:Home; \
     Remove-Item $env:Home\krp.zip
 
 # Configure Kart Racing Pro
-COPY ./start.ps1 ${HOME}/start.ps1
-COPY ./server.ini ${HOME}/server.ini
+COPY ./scripts/start.ps1 ${HOME}/start.ps1
+COPY ./configs/server.ini ${HOME}/server.ini
+COPY ./configs/global.ini ${HOME}/global.ini
+
+ARG SERVER_CONFIG="server.ini"
+ENV SERVER_CONFIG ${SERVER_CONFIG}
 
 # Expose ports
-EXPOSE 54410
 EXPOSE 54411
 EXPOSE 54412
+EXPOSE 54413
 
-ENTRYPOINT [ "powershell" ]
-CMD [ "./start.ps1" ]
+ENTRYPOINT [ "powershell", "./start.ps1" ]
