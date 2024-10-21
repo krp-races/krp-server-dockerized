@@ -1,1 +1,0 @@
-Start-Process -FilePath "kart.exe" -ArgumentList "-dedicated","54410" -Wait
