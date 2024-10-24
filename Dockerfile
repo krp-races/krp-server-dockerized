@@ -58,4 +58,4 @@ EXPOSE 54413
 EXPOSE 54413/udp
 
 # Start Command
-CMD "${HOME}/start.sh"
+CMD [ "${HOME}/start.sh" ]
