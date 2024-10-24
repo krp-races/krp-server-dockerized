@@ -1,42 +1,53 @@
 # KRP-Server-Dockerized
 
 # Base Image
-FROM mcr.microsoft.com/windows/server:ltsc2022
+FROM debian:latest
 
 # Author
 LABEL maintainer="info@fynnhaupt.de"
 
-# Activate PowerShell
-SHELL ["powershell"]
-
 # Set working directory
-ENV HOME=C:\\krp-server
-RUN New-Item -ItemType Directory $env:HOME
+ENV HOME=/opt/krp-server
+RUN mkdir ${HOME}
 WORKDIR ${HOME}
+
+# Add contrib repository
+RUN sed -i -e "s/main/main contrib/g" /etc/apt/sources.list.d/debian.sources
+
+# Update and Upgrade
+RUN apt-get update && apt-get upgrade -y
+
+# Install wget and unzip
+RUN apt-get install -y wget unzip
+
+# Add i386 architecture
+RUN dpkg --add-architecture i386
+
+# Add winehq repository key
+RUN mkdir -pm755 /etc/apt/keyrings; \
+    wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
+
+# Add winehq repository
+RUN wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources; \
+    apt-get update
+
+# Install winehq-stable, xvfb and x11vnc
+RUN apt install -y --install-recommends winehq-stable xvfb x11vnc
 
 # Download Kart Racing Pro
 ARG DOWNLOAD_URL="https://www.kartracing-pro.com/downloads/krp-rel13e.exe"
 ADD ${DOWNLOAD_URL} krp-installer.exe
 
-# Extract Kart Racing Pro
-RUN ./krp-installer.exe -extract
-
-# Install Kart Racing Pro
-RUN Expand-Archive -Path $env:Home\krp.zip -DestinationPath $env:Home; \
-    Remove-Item $env:Home\krp-installer.exe; \
-    Remove-Item $env:Home\krp.zip
-
 # Configure Kart Racing Pro
-COPY ./scripts/start.ps1 ${HOME}/start.ps1
 COPY ./configs/server.ini ${HOME}/server.ini
 COPY ./configs/global.ini ${HOME}/global.ini
 
-ARG SERVER_CONFIG="server.ini"
-ENV SERVER_CONFIG ${SERVER_CONFIG}
+# Copy Scripts
+COPY ./scripts/setup_xvfb.sh ${HOME}/setup_xvfb.sh
+COPY ./scripts/install_wine_mono.sh ${HOME}/install_wine_mono.sh
+COPY ./scripts/install_krp_server.sh ${HOME}/install_krp_server.sh
+COPY ./scripts/start_krp_server.sh ${HOME}/start_krp_server.sh
+COPY ./scripts/start.sh ${HOME}/start.sh
 
-# Expose ports
-EXPOSE 54411
-EXPOSE 54412
-EXPOSE 54413
-
-ENTRYPOINT [ "powershell", "./start.ps1" ]
+# Start Command
+CMD "${HOME}/start.sh"
