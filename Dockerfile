@@ -49,5 +49,13 @@ COPY ./configs/global.ini ${HOME}/global.ini
 COPY ./scripts/start.sh ${HOME}/start.sh
 RUN chmod +x start.sh
 
+# Expose Ports
+EXPOSE 54411
+EXPOSE 54411/udp
+EXPOSE 54412
+EXPOSE 54412/udp
+EXPOSE 54413
+EXPOSE 54413/udp
+
 # Start Command
 CMD "${HOME}/start.sh"
