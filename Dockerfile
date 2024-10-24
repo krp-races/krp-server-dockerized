@@ -31,8 +31,8 @@ RUN mkdir -pm755 /etc/apt/keyrings; \
 RUN wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources; \
     apt-get update
 
-# Install winehq-stable, xvfb and x11vnc
-RUN apt install -y --install-recommends winehq-stable xvfb x11vnc
+# Install winehq-stable and xvfb
+RUN apt install -y --install-recommends winehq-stable xvfb
 
 # Download Kart Racing Pro
 ARG DOWNLOAD_URL="https://www.kartracing-pro.com/downloads/krp-rel13e.exe"
