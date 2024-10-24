@@ -27,5 +27,5 @@ fi
 
 
 echo "Server started..."
-wine kart.exe -dedicated 54411
+wine kart.exe -dedicated 54411 -set params ${SERVER_CONFIG}
 echo "Server stopped..."

@@ -45,6 +45,9 @@ ADD ${WINE_MONO_URL} wine-mono.msi
 ARG KRP_URL="https://www.kartracing-pro.com/downloads/krp-rel13e.exe"
 ADD ${KRP_URL} krp-installer.exe
 
+# Server Config
+ENV SERVER_CONFIG="server.ini"
+
 # Configure Kart Racing Pro
 COPY ./configs/server.ini ${HOME}/server.ini
 COPY ./configs/global.ini ${HOME}/global.ini
