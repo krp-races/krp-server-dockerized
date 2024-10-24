@@ -46,12 +46,8 @@ COPY ./configs/server.ini ${HOME}/server.ini
 COPY ./configs/global.ini ${HOME}/global.ini
 
 # Copy Scripts
-COPY ./scripts/setup_xvfb.sh ${HOME}/setup_xvfb.sh
-COPY ./scripts/install_wine_mono.sh ${HOME}/install_wine_mono.sh
-COPY ./scripts/install_krp_server.sh ${HOME}/install_krp_server.sh
-COPY ./scripts/start_krp_server.sh ${HOME}/start_krp_server.sh
 COPY ./scripts/start.sh ${HOME}/start.sh
-RUN chmod +x ${HOME}/*.sh
+RUN chmod +x start.sh
 
 # Start Command
 CMD "${HOME}/start.sh"
