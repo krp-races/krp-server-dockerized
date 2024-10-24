@@ -10,7 +10,6 @@ export DISPLAY=:99
 echo "Done..."
 
 echo "Installing KRP Server..."
-ls
 wine krp-installer.exe -extract
 unzip krp.zip
 rm krp-installer.exe
