@@ -1,6 +1,5 @@
 echo "Installing Wine Mono..."
 WINEDEBUG=-all wine msiexec /i wine-mono.msi /qn
-rm wine-mono.msi
 echo "Done..."
 
 echo "Setup Xvfb..."
@@ -11,8 +10,6 @@ echo "Done..."
 echo "Installing KRP Server..."
 wine krp-installer.exe -extract
 unzip krp.zip
-rm krp-installer.exe
-rm krp.zip
 echo "Done..."
 
 echo "Server started..."
