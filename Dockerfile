@@ -34,6 +34,9 @@ RUN wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/d
 # Install winehq-stable and xvfb
 RUN apt install -y --install-recommends winehq-stable xvfb
 
+# Hide wine fixme warnings
+ENV WINEDEBUG=fixme-all
+
 # Download Kart Racing Pro
 ARG DOWNLOAD_URL="https://www.kartracing-pro.com/downloads/krp-rel13e.exe"
 ADD ${DOWNLOAD_URL} krp-installer.exe
