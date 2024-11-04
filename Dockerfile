@@ -3,9 +3,6 @@
 # Base Image
 FROM debian:latest
 
-# Author
-LABEL maintainer="info@fynnhaupt.de"
-
 # Set working directory
 ENV HOME=/opt/krp-server
 RUN mkdir ${HOME}
