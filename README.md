@@ -1,10 +1,8 @@
 # KRP Server Dockerized
 
-A docker image for running a kart racing pro server.
+A docker image for running a kart racing pro server. The source is available [on Github](https://github.com/krp-races/krp-server-dockerized).
 
-## Requirements
-
-- None
+Images are based on Debian 12.
 
 ## Installing
 
