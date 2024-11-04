@@ -7,17 +7,15 @@ name: Docker
 
 on:
   schedule:
-    - cron: '42 2 * * *'
+    - cron: "42 2 * * *"
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+    tags: ["v*.*.*"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 env:
-  # Use docker.io for Docker Hub if empty
-  REGISTRY: docker.io
   # Image name format: <namespace>/<repo>
   IMAGE_NAME: krpraces/krp-server-dockerized
 
@@ -42,7 +40,7 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: sigstore/cosign-installer@v3.7.0 #v3.7.0
         with:
-          cosign-release: 'v2.4.1'
+          cosign-release: "v2.4.1"
 
       # Set up BuildKit Docker container builder to be able to build
       # multi-platform images and export cache
@@ -56,7 +54,6 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v3 # v3.0.0
         with:
-          registry: ${{ env.REGISTRY }}
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASS }}
 
@@ -66,7 +63,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5 # v5.0.0
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.IMAGE_NAME }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
