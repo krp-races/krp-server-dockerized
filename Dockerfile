@@ -14,8 +14,8 @@ RUN sed -i -e "s/main/main contrib/g" /etc/apt/sources.list.d/debian.sources
 # Update and Upgrade
 RUN apt-get update && apt-get upgrade -y
 
-# Install wget and unzip
-RUN apt-get install -y wget unzip
+# Install wget and 7zip
+RUN apt-get install -y wget p7zip-full
 
 # Add i386 architecture
 RUN dpkg --add-architecture i386
@@ -28,7 +28,7 @@ RUN mkdir -pm755 /etc/apt/keyrings; \
 ADD https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources /etc/apt/sources.list.d/winehq-bookworm.sources
 RUN apt-get update
 
-# Install winehq-stable and xvfb
+# Install winehq-stable, xvfb
 RUN apt install -y --install-recommends winehq-stable xvfb
 
 # Hide wine fixme warnings
@@ -42,13 +42,19 @@ ADD ${WINE_MONO_URL} wine-mono.msi
 ARG KRP_URL="https://www.kartracing-pro.com/downloads/krp-rel13e.exe"
 ADD ${KRP_URL} krp-installer.exe
 
-# Server Port
-ENV SERVER_PORT=54411
+# Install Mono
+RUN wine msiexec /i wine-mono.msi /qn; \
+    rm wine-mono.msi
 
-# Server Config
+# Extract krp server
+RUN 7z x krp-installer.exe; \
+    rm krp-installer.exe
+
+# Environmental Variables
+ENV SERVER_PORT=54411
 ENV SERVER_CONFIG="server.ini"
 
-# Configure Kart Racing Pro
+# Default Configuration
 COPY ./configs/server.ini ${HOME}/server.ini
 
 # Copy Scripts
