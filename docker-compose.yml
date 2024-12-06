@@ -1,9 +1,0 @@
-services:
-  krp-server:
-    build: .
-    restart: always
-    ports:
-      - "54000:54000"
-      - "54000:54000/udp"
-    environment:
-      SERVER_PORT: 54000

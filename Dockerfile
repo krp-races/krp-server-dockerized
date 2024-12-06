@@ -42,10 +42,6 @@ ADD ${WINE_MONO_URL} wine-mono.msi
 ARG KRP_URL="https://www.kartracing-pro.com/downloads/krp-rel13e.exe"
 ADD ${KRP_URL} krp-installer.exe
 
-# Install Mono
-RUN wine msiexec /i wine-mono.msi /qn; \
-    rm wine-mono.msi
-
 # Extract krp server
 RUN 7z x krp-installer.exe; \
     rm krp-installer.exe
