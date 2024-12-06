@@ -42,24 +42,22 @@ ADD ${WINE_MONO_URL} wine-mono.msi
 ARG KRP_URL="https://www.kartracing-pro.com/downloads/krp-rel13e.exe"
 ADD ${KRP_URL} krp-installer.exe
 
+# Server Port
+ENV SERVER_PORT=54411
+
 # Server Config
 ENV SERVER_CONFIG="server.ini"
 
 # Configure Kart Racing Pro
 COPY ./configs/server.ini ${HOME}/server.ini
-COPY ./configs/global.ini ${HOME}/global.ini
 
 # Copy Scripts
 COPY ./scripts/start.sh ${HOME}/start.sh
 RUN chmod +x start.sh
 
 # Expose Ports
-EXPOSE 54411
-EXPOSE 54411/udp
-EXPOSE 54412
-EXPOSE 54412/udp
-EXPOSE 54413
-EXPOSE 54413/udp
+EXPOSE ${SERVER_PORT}
+EXPOSE ${SERVER_PORT}/udp
 
 # Start Command
 ENTRYPOINT [ "/bin/sh", "-c", "${HOME}/start.sh" ]

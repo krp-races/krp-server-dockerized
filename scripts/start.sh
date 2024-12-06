@@ -25,7 +25,6 @@ else
     echo "KRP Server already installed..."
 fi
 
-
 echo "Server started..."
-wine kart.exe -dedicated 54411 -set params ${SERVER_CONFIG}
+wine kart.exe -dedicated ${SERVER_PORT} -set params ${SERVER_CONFIG}
 echo "Server stopped..."
