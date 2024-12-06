@@ -52,6 +52,8 @@ RUN 7z x krp-installer.exe; \
 
 # Environmental Variables
 ENV SERVER_PORT=54411
+ENV LIVETIMING_PORT=54412
+ENV REMOTEADMIN_PORT=54413
 ENV SERVER_CONFIG="server.ini"
 
 # Default Configuration
@@ -64,6 +66,10 @@ RUN chmod +x start.sh
 # Expose Ports
 EXPOSE ${SERVER_PORT}
 EXPOSE ${SERVER_PORT}/udp
+EXPOSE ${LIVETIMING_PORT}
+EXPOSE ${LIVETIMING_PORT}/udp
+EXPOSE ${REMOTEADMIN_PORT}
+EXPOSE ${REMOTEADMIN_PORT}/udp
 
 # Start Command
 ENTRYPOINT [ "/bin/sh", "-c", "${HOME}/start.sh" ]
