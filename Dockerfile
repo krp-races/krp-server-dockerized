@@ -1,7 +1,7 @@
 # KRP-Server-Dockerized
 
 # Base Image
-FROM debian:latest
+FROM debian:12
 
 # Set working directory
 ENV HOME=/opt/krp-server
