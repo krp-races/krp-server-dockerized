@@ -14,5 +14,7 @@ export DISPLAY=:99
 echo "Done..."
 
 echo "Server started..."
+echo "Port: ${SERVER_PORT}"
+echo "Config: ${SERVER_CONFIG}"
 wine kart.exe -dedicated ${SERVER_PORT} -set params ${SERVER_CONFIG}
 echo "Server stopped..."
