@@ -39,7 +39,7 @@ ARG WINE_MONO_URL="https://dl.winehq.org/wine/wine-mono/9.3.0/wine-mono-9.3.0-x8
 ADD ${WINE_MONO_URL} wine-mono.msi
 
 # Download Kart Racing Pro
-ARG KRP_URL="https://www.kartracing-pro.com/downloads/krp-rel13e.exe"
+ARG KRP_URL="https://www.kartracing-pro.com/downloads/krp-rel14.exe"
 ADD ${KRP_URL} krp-installer.exe
 
 # Extract krp server
